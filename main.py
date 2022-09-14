@@ -11,7 +11,7 @@ from login import LoginWin
 if __name__ == "__main__":
     #Aqui es donde se ejecuta el programa cargando el "formulario" de login
     app=QApplication(sys.argv)
-    #window=LoginWin()
-    window=CajeroWin("TulioACG")
+    window=LoginWin()
+    #window=CajeroWin("TulioACG")
     #window=Pagar()
     sys.exit(app.exec_())

@@ -77,7 +77,7 @@ class CajeroWin(QMainWindow):
         self.cajeroUi.BtnVaciar.clicked.connect(self.botonVaciar)
 
     def botonAdmin(self):
-        self.admin = Administrador()
+        self.admin = Administrador(self.usuario)
         #self.close()
         pass
 

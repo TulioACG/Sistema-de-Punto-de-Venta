@@ -4,11 +4,12 @@ from views.administrador import Ui_MainWindow as AdminMainWindow
 from colorama import init, Fore, Back
 
 class Administrador(QMainWindow):
-    def __init__(self):
+    def __init__(self,usuario):
         QMainWindow.__init__(self)
         self.AdminUi = AdminMainWindow()
         self.AdminUi.setupUi(self)
         self.baseDatos = Conexion()
+        self.usuario = usuario
         self.conexionBotones()
         self.show()
         pass
@@ -20,7 +21,7 @@ class Administrador(QMainWindow):
         self.AdminUi.tablaEliminarTipoProducto.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         self.AdminUi.tableEliminarUsuario.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
 
-        self.AdminUi.label_2.setText("Usuario: TulioACG")
+        self.AdminUi.label_2.setText(f"Usuario: {self.usuario}")
         self.AdminUi.btnCerrar.clicked.connect(self.botonCerrar)
         
         #Aqui estan las conexiones con los botones
@@ -99,6 +100,7 @@ class Administrador(QMainWindow):
             msg = QMessageBox(QMessageBox.Icon.Critical,"Error","Ha ocurrido un error al eliminar el tipo de producto\n\n"+str(ex))
             msg.exec()
         pass
+        self.refreshUI()
 
     def botonCancelarEliminarTipoProducto(self):
         self.botonActualizarEliminarTipoProducto()
@@ -130,6 +132,7 @@ class Administrador(QMainWindow):
             msg = QMessageBox(QMessageBox.Icon.Critical,"Error","Ha ocurrido un error al eliminar el producto\n\n"+str(ex))
             msg.exec()
         self.botonCancelarEliminarProducto()
+        self.refreshUI()
 
     def botonCancelarEliminarProducto(self):
         self.cambiarPestana(0)
@@ -156,6 +159,7 @@ class Administrador(QMainWindow):
             msg = QMessageBox(QMessageBox.Icon.Critical,"Error","Ha ocurrido un error al eliminar al usuario\n\n"+str(ex))
             msg.exec()
         self.botonCancelarEliminarUsuario()
+        self.refreshUI()
 
     def llenarTablaEliminarUsuario(self):
         usuario = self.baseDatos.getUsuarios()
@@ -192,6 +196,7 @@ class Administrador(QMainWindow):
             msg = QMessageBox(QMessageBox.Icon.Critical,"Error","Se ha producido un error al actualizar el tipo de producto\n\n"+str(ex))
             msg.exec()
         self.botonCancelarModTipoProducto()
+        self.refreshUI()
 
     def botonCancelarModTipoProducto(self):
         self.cambiarPestana(0)
@@ -235,6 +240,7 @@ class Administrador(QMainWindow):
             msg = QMessageBox(QMessageBox.Icon.Critical,"Error","Ha ocurrido un error al actualizar la informacion del producto: \n\n"+str(ex))
             msg.exec()
         self.botonCancelarModProducto()
+        self.refreshUI()
 
     def botonCancelarModProducto(self):
         self.llenarModProducto()
@@ -279,6 +285,7 @@ class Administrador(QMainWindow):
             msg = QMessageBox(QMessageBox.Icon.Information,"Error","Ha ocurrido un error al actualizar la informacion del usuario: \n\n"+str(ex))
             msg.exec()
         self.botonCancelarModUsuario()
+        self.refreshUI()
 
     def botonCancelarModUsuario(self):
         self.tuplaUsuarios = self.llenarComboModUsuarios()
@@ -295,6 +302,7 @@ class Administrador(QMainWindow):
             msg = QMessageBox(QMessageBox.Icon.Critical,"Error","Ha ocurrido un error al crear el nuevo tipo de producto\n"+str(ex))
             msg.exec()
         self.botonCancelarAgregarTipoProducto()
+        self.refreshUI()
 
     def botonCancelarAgregarTipoProducto(self):
         self.AdminUi.lineAgregarNombreTipoP.setText("")
@@ -317,6 +325,7 @@ class Administrador(QMainWindow):
             msg = QMessageBox(QMessageBox.Icon.Critical,"Error","Ha ocurrido un error al crear el producto, por favor verifique sus datos\n"+str(ex))
             msg.exec()
         self.botonCancelarAgregarProducto()
+        self.refreshUI()
     
     def botonCancelarAgregarProducto(self):
         self.AdminUi.lineNombreProducto.setText("")
@@ -345,6 +354,7 @@ class Administrador(QMainWindow):
             msg.exec()
         self.botonCancelarAgregarUsuario()
         self.botonCancelarModUsuario()
+        self.refreshUI()
 
     def botonCancelarAgregarUsuario(self):
         self.AdminUi.lineNombre.setText("")
@@ -357,3 +367,8 @@ class Administrador(QMainWindow):
 
     def botonCerrar(self):
         self.close()
+
+    def refreshUI(self):
+        self.AdminUi.setupUi(self)
+        self.conexionBotones()
+        
