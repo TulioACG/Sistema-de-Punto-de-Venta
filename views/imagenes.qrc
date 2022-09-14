@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="imagenes-folder">
+    <file>hamburguesa.jpg</file>
+    <file>logo.png</file>
+  </qresource>
+</RCC>
